@@ -26,3 +26,24 @@ jobs:
 
       - name: Test
         run: pytest
+
+  # The core is stdlib-only (proven by the matrix above); this job installs
+  # the optional 'png' extra plus its system cairo dependency so the PNG
+  # export tests actually run instead of skipping.
+  png-export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install cairo
+        run: sudo apt-get update && sudo apt-get install -y libcairo2
+
+      - name: Install package with dev and png extras
+        run: pip install -e ".[dev,png]"
+
+      - name: Test
+        run: pytest
