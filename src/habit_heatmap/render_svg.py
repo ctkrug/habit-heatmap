@@ -12,6 +12,10 @@ MARGIN = 20
 WEEKDAY_LABEL_WIDTH = 26
 MONTH_LABEL_HEIGHT = 16
 MONTH_LABEL_MIN_GAP_WEEKS = 2
+LEGEND_HEIGHT = 20
+LEGEND_LESS_WIDTH = 24
+LEGEND_MORE_WIDTH = 28
+LEGEND_SWATCH_GAP = 2
 WEEKDAY_LABELS = {1: "Mon", 3: "Wed", 5: "Fri"}  # Sunday = 0
 MONTH_NAMES = (
     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -53,6 +57,21 @@ def _month_labels(
     return labels
 
 
+def _legend(palette: tuple[str, ...], x0: int, y: int, cell_size: int) -> list[str]:
+    """Build a "Less ... More" legend strip using ``palette``'s own colors."""
+    elements = [f'<text x="{x0}" y="{y + cell_size - 1}" {FONT}>Less</text>']
+    swatch_x = x0 + LEGEND_LESS_WIDTH
+    stride = cell_size + LEGEND_SWATCH_GAP
+    for color in palette:
+        elements.append(
+            f'<rect x="{swatch_x}" y="{y}" width="{cell_size}" height="{cell_size}" '
+            f'rx="2" ry="2" fill="{color}"/>'
+        )
+        swatch_x += stride
+    elements.append(f'<text x="{swatch_x}" y="{y + cell_size - 1}" {FONT}>More</text>')
+    return elements
+
+
 def render_svg(
     counts: dict[date, float],
     start: date | None = None,
@@ -60,12 +79,14 @@ def render_svg(
     theme: str = "github",
     cell_size: int = CELL_SIZE,
     gap: int = CELL_GAP,
+    legend: bool = True,
 ) -> str:
     """Render ``counts`` as a self-contained SVG contribution heatmap.
 
     Defaults to spanning the earliest to latest date present in
     ``counts``; pass ``start``/``end`` to render an explicit range
-    (required if ``counts`` is empty).
+    (required if ``counts`` is empty). Pass ``legend=False`` to omit the
+    "Less ... More" color-scale strip below the grid.
     """
     if not counts and (start is None or end is None):
         raise ValueError("counts is empty; pass explicit start and end dates")
@@ -86,7 +107,7 @@ def render_svg(
     grid_x0 = MARGIN + WEEKDAY_LABEL_WIDTH
     grid_y0 = MARGIN + MONTH_LABEL_HEIGHT
     width = grid_x0 + weeks * stride + MARGIN
-    height = grid_y0 + 7 * stride + MARGIN
+    height = grid_y0 + 7 * stride + (LEGEND_HEIGHT if legend else 0) + MARGIN
 
     cells = []
     day = grid_start
@@ -109,8 +130,13 @@ def render_svg(
         for weekday, text in WEEKDAY_LABELS.items()
     ]
     month_labels = _month_labels(grid_start, start, weeks, stride, grid_x0, MARGIN + 12)
+    legend_elements = (
+        _legend(palette, grid_x0, grid_y0 + 7 * stride + (LEGEND_HEIGHT - cell_size), cell_size)
+        if legend
+        else []
+    )
 
-    body = "\n  ".join(weekday_labels + month_labels + cells)
+    body = "\n  ".join(weekday_labels + month_labels + cells + legend_elements)
     return (
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
         f'viewBox="0 0 {width} {height}">\n  {body}\n</svg>\n'
