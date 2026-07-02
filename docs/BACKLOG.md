@@ -31,11 +31,13 @@ work without preprocessing.
 Round out the command-line experience and get the package installable from
 PyPI.
 
-- [ ] Add `--week-start` to support Monday-start grids (ISO week convention)
-- [ ] Add a `--quiet` flag and make the "wrote <path>" message opt-in via
+- [x] Add `--week-start` to support Monday-start grids (ISO week convention)
+- [x] Add a `--quiet` flag and make the "wrote <path>" message opt-in via
       `--verbose` instead of unconditional
 - [ ] Publish the package to PyPI and add install/version badges to the README
-- [ ] Add a `habit-heatmap --version` flag
+      — deferred: needs a PyPI account/API token, which isn't available in
+      this build environment
+- [x] Add a `habit-heatmap --version` flag
 
 ## Epic 4: Distribution and examples
 
