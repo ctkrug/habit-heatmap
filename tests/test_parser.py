@@ -68,6 +68,13 @@ def test_load_events_assumes_utc_for_naive_timestamps_with_tz(tmp_path):
     assert counts == {date(2024, 1, 1): 1.0}
 
 
+def test_load_events_strips_utf8_bom(tmp_path):
+    csv_path = tmp_path / "excel_export.csv"
+    csv_path.write_bytes(b"\xef\xbb\xbfdate,value\n2024-01-01,1\n")
+    counts = load_events(csv_path, value_col="value")
+    assert counts == {date(2024, 1, 1): 1.0}
+
+
 def test_load_events_reads_from_stdin(monkeypatch):
     monkeypatch.setattr("sys.stdin", io.StringIO("date,value\n2024-01-01,1\n2024-01-01,2\n"))
     counts = load_events("-", value_col="value")

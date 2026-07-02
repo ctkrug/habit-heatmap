@@ -90,7 +90,7 @@ def load_events(
     if csv_path == "-":
         source = nullcontext(sys.stdin)
     else:
-        source = open(csv_path, newline="", encoding="utf-8")
+        source = open(csv_path, newline="", encoding="utf-8-sig")
     with source as fh:
         reader = csv.DictReader(fh)
         if date_col not in (reader.fieldnames or []):
