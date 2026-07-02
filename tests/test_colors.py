@@ -21,3 +21,13 @@ def test_bucket_color_is_monotonic():
 def test_bucket_color_handles_zero_max():
     palette = THEMES["github"]
     assert bucket_color(0, 0, palette) == palette[0]
+
+
+def test_all_themes_have_five_colors():
+    for name, palette in THEMES.items():
+        assert len(palette) == 5, name
+
+
+def test_mono_and_dark_themes_are_registered():
+    assert "mono" in THEMES
+    assert "dark" in THEMES
