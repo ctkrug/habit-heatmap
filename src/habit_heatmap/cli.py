@@ -33,7 +33,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--end", type=_parse_iso_date, default=None, help="last day to render (YYYY-MM-DD)"
     )
-    parser.add_argument("--theme", default="github", help="color theme: github, blue, or purple")
+    parser.add_argument(
+        "--theme", default="github", help="color theme: github, blue, purple, mono, or dark"
+    )
     parser.add_argument("--label", default=None, help="title rendered above the chart")
     return parser
 
