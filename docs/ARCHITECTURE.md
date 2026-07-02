@@ -19,9 +19,13 @@ tests/
   test_parser.py, test_colors.py, test_render_svg.py, test_render_png.py, test_cli.py
   fixtures/sample.csv
 examples/
-  quickstart.py, workouts.csv
+  quickstart.py, workouts.csv, mood.csv
 docs/
-  VISION.md, BACKLOG.md, ARCHITECTURE.md (this file), example.svg
+  VISION.md, BACKLOG.md, ARCHITECTURE.md (this file), DESIGN.md
+  COOKBOOK.md, GALLERY.md, example.svg, gallery/*.svg
+  launch/devto.md
+site/
+  index.html      # marketing landing page (built to docs/DESIGN.md)
 ```
 
 ## Data flow
