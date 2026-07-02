@@ -90,6 +90,6 @@ def test_load_events_from_rows_accepts_date_and_datetime_objects():
 
 
 def test_load_events_from_rows_skips_rows_without_a_date():
-    rows = [{"date": "2024-01-01"}, {"date": None}, {"date": ""}]
+    rows = [{"date": "2024-01-01"}, {"date": None}, {"date": ""}, {"date": "   "}]
     counts = load_events_from_rows(rows)
     assert counts == {date(2024, 1, 1): 1.0}

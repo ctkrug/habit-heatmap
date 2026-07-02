@@ -50,7 +50,7 @@ def _row_bucket(
 ) -> tuple[date, float] | None:
     """Extract the (day, amount) contribution of one row, or None to skip it."""
     raw_date = row.get(date_col)
-    if not raw_date:
+    if not raw_date or (isinstance(raw_date, str) and not raw_date.strip()):
         return None
     moment = _to_moment(raw_date, date_format)
     if target_zone is not None:
