@@ -17,6 +17,17 @@ def test_cli_writes_svg_file(tmp_path):
     assert output.read_text().startswith("<svg")
 
 
+def test_cli_applies_label(tmp_path):
+    output = tmp_path / "heatmap.svg"
+    result = subprocess.run(
+        [sys.executable, "-m", "habit_heatmap", str(FIXTURE), "-o", str(output), "--label", "Gym"],
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert ">Gym<" in output.read_text()
+
+
 def test_cli_reports_missing_column(tmp_path):
     output = tmp_path / "heatmap.svg"
     result = subprocess.run(
