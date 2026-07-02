@@ -88,6 +88,15 @@ def test_load_events_reads_from_stdin(monkeypatch):
     assert counts == {date(2024, 1, 1): 3.0}
 
 
+def test_load_events_from_rows_normalizes_timestamps_to_tz():
+    rows = [
+        {"date": "2024-01-01T23:30:00Z", "value": 1},
+        {"date": "2024-01-02T02:00:00Z", "value": 1},
+    ]
+    counts = load_events_from_rows(rows, value_col="value", tz="America/Chicago")
+    assert counts == {date(2024, 1, 1): 2.0}
+
+
 def test_load_events_from_rows_accepts_string_dates():
     rows = [{"date": "2024-01-01", "value": "2"}, {"date": "2024-01-01", "value": "3"}]
     counts = load_events_from_rows(rows, value_col="value")
