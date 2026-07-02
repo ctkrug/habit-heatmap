@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import csv
+import sys
 from collections import defaultdict
+from contextlib import nullcontext
 from datetime import date, datetime, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -43,10 +45,16 @@ def load_events(
     When ``tz`` is given (an IANA zone name, e.g. ``"America/Chicago"``),
     each timestamp is normalized to that zone before bucketing into a day;
     a timestamp with no UTC offset of its own is assumed to be UTC.
+
+    Pass ``"-"`` as ``csv_path`` to read the CSV from stdin instead of a file.
     """
     target_zone = ZoneInfo(tz) if tz else None
     counts: dict[date, float] = defaultdict(float)
-    with open(csv_path, newline="", encoding="utf-8") as fh:
+    if csv_path == "-":
+        source = nullcontext(sys.stdin)
+    else:
+        source = open(csv_path, newline="", encoding="utf-8")
+    with source as fh:
         reader = csv.DictReader(fh)
         if date_col not in (reader.fieldnames or []):
             raise ValueError(f"CSV has no {date_col!r} column; found {reader.fieldnames}")
