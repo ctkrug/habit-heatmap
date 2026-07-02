@@ -6,12 +6,11 @@ import csv
 from collections import defaultdict
 from datetime import date, datetime
 from pathlib import Path
-from typing import Optional, Union
 
 DEFAULT_DATE_FORMATS = ("%Y-%m-%d", "%Y/%m/%d", "%m/%d/%Y")
 
 
-def _parse_date(raw: str, fmt: Optional[str] = None) -> date:
+def _parse_date(raw: str, fmt: str | None = None) -> date:
     raw = raw.strip()
     formats = (fmt,) if fmt else DEFAULT_DATE_FORMATS
     for candidate in formats:
@@ -23,10 +22,10 @@ def _parse_date(raw: str, fmt: Optional[str] = None) -> date:
 
 
 def load_events(
-    csv_path: Union[str, Path],
+    csv_path: str | Path,
     date_col: str = "date",
-    value_col: Optional[str] = None,
-    date_format: Optional[str] = None,
+    value_col: str | None = None,
+    date_format: str | None = None,
 ) -> dict[date, float]:
     """Aggregate a CSV of dated events into per-day totals.
 

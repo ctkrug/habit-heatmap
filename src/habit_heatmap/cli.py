@@ -6,7 +6,6 @@ import argparse
 import sys
 from datetime import date, datetime
 from pathlib import Path
-from typing import Optional
 
 from .parser import load_events
 from .render_svg import render_svg
@@ -23,18 +22,22 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("csv", help="path to the input CSV file")
     parser.add_argument("-o", "--output", required=True, help="output file path (.svg or .png)")
-    parser.add_argument("--date-col", default="date", help="name of the date column (default: date)")
+    parser.add_argument("--date-col", default="date", help="date column name (default: date)")
     parser.add_argument(
         "--value-col", default=None, help="numeric column to sum per day (default: count rows)"
     )
-    parser.add_argument("--date-format", default=None, help="explicit strptime format for the date column")
-    parser.add_argument("--start", type=_parse_iso_date, default=None, help="first day to render (YYYY-MM-DD)")
-    parser.add_argument("--end", type=_parse_iso_date, default=None, help="last day to render (YYYY-MM-DD)")
+    parser.add_argument("--date-format", default=None, help="explicit strptime format for dates")
+    parser.add_argument(
+        "--start", type=_parse_iso_date, default=None, help="first day to render (YYYY-MM-DD)"
+    )
+    parser.add_argument(
+        "--end", type=_parse_iso_date, default=None, help="last day to render (YYYY-MM-DD)"
+    )
     parser.add_argument("--theme", default="github", help="color theme: github, blue, or purple")
     return parser
 
 
-def main(argv: Optional[list[str]] = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
 
     counts = load_events(

@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from datetime import date, timedelta
-from typing import Optional
 
 from .colors import THEMES, bucket_color
 
@@ -19,8 +18,8 @@ def _week_start(day: date) -> date:
 
 def render_svg(
     counts: dict[date, float],
-    start: Optional[date] = None,
-    end: Optional[date] = None,
+    start: date | None = None,
+    end: date | None = None,
     theme: str = "github",
     cell_size: int = CELL_SIZE,
     gap: int = CELL_GAP,
