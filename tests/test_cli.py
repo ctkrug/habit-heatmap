@@ -122,6 +122,18 @@ def test_cli_verbose_prints_wrote_message(tmp_path):
     assert f"wrote {output}" in result.stderr
 
 
+def test_cli_quiet_flag_alone_is_a_silent_no_op(tmp_path):
+    output = tmp_path / "heatmap.svg"
+    result = subprocess.run(
+        [sys.executable, "-m", "habit_heatmap", str(FIXTURE), "-o", str(output), "--quiet"],
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert result.stderr == ""
+    assert output.exists()
+
+
 def test_cli_rejects_verbose_and_quiet_together(tmp_path):
     output = tmp_path / "heatmap.svg"
     result = subprocess.run(
