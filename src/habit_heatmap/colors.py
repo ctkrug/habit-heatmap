@@ -9,6 +9,8 @@ THEMES: dict[str, tuple[str, ...]] = {
     "github": GITHUB_GREEN,
     "blue": ("#ebedf0", "#c6dbef", "#6baed6", "#3182bd", "#08519c"),
     "purple": ("#ebedf0", "#dadaeb", "#9e9ac8", "#6a51a3", "#3f007d"),
+    "mono": ("#ebedf0", "#c4c4c4", "#8c8c8c", "#545454", "#1a1a1a"),
+    "dark": ("#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"),
 }
 
 
