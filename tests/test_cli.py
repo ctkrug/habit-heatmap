@@ -2,7 +2,19 @@ import subprocess
 import sys
 from pathlib import Path
 
+from habit_heatmap.version import __version__
+
 FIXTURE = Path(__file__).parent / "fixtures" / "sample.csv"
+
+
+def test_cli_prints_version(tmp_path):
+    result = subprocess.run(
+        [sys.executable, "-m", "habit_heatmap", "--version"],
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert __version__ in result.stdout
 
 
 def test_cli_writes_svg_file(tmp_path):
