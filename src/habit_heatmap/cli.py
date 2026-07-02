@@ -48,6 +48,13 @@ def build_parser() -> argparse.ArgumentParser:
         choices=("sunday", "monday"),
         help="first weekday of each grid column (default: sunday)",
     )
+    verbosity = parser.add_mutually_exclusive_group()
+    verbosity.add_argument(
+        "--verbose", action="store_true", help='print the "wrote <path>" message (default: off)'
+    )
+    verbosity.add_argument(
+        "--quiet", action="store_true", help="suppress all output (the default; kept for clarity)"
+    )
     return parser
 
 
@@ -78,7 +85,8 @@ def main(argv: list[str] | None = None) -> int:
     else:
         output.write_text(svg, encoding="utf-8")
 
-    print(f"wrote {output}", file=sys.stderr)
+    if args.verbose:
+        print(f"wrote {output}", file=sys.stderr)
     return 0
 
 
