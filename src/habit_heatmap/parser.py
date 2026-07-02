@@ -38,6 +38,11 @@ def _to_moment(raw_date: Any, fmt: str | None) -> datetime:
         return raw_date
     if isinstance(raw_date, date):
         return datetime(raw_date.year, raw_date.month, raw_date.day)
+    if not isinstance(raw_date, str):
+        raise ValueError(
+            f"cannot parse date from {raw_date!r} of type {type(raw_date).__name__}; "
+            "expected a str, date, or datetime"
+        )
     return _parse_datetime(raw_date, fmt)
 
 
