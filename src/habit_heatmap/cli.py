@@ -34,6 +34,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--end", type=_parse_iso_date, default=None, help="last day to render (YYYY-MM-DD)"
     )
     parser.add_argument("--theme", default="github", help="color theme: github, blue, or purple")
+    parser.add_argument("--label", default=None, help="title rendered above the chart")
     return parser
 
 
@@ -46,7 +47,7 @@ def main(argv: list[str] | None = None) -> int:
         value_col=args.value_col,
         date_format=args.date_format,
     )
-    svg = render_svg(counts, start=args.start, end=args.end, theme=args.theme)
+    svg = render_svg(counts, start=args.start, end=args.end, theme=args.theme, label=args.label)
 
     output = Path(args.output)
     if output.suffix.lower() == ".png":
