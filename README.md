@@ -84,7 +84,8 @@ counts = load_events_from_rows(db.query("SELECT logged_at AS date, minutes FROM 
 ### Themes
 
 Built in: `github`, `blue`, `purple`, `mono` (grayscale), `dark` (for embedding on a
-dark-mode page). To add your own, register a 5-color tuple — lightest (no activity)
+dark-mode page) — see [`docs/GALLERY.md`](docs/GALLERY.md) for all five rendered
+side by side. To add your own, register a 5-color tuple — lightest (no activity)
 to darkest (busiest) — in `habit_heatmap.colors.THEMES`:
 
 ```python
