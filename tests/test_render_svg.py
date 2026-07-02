@@ -7,14 +7,14 @@ from habit_heatmap.render_svg import render_svg
 
 def test_render_svg_produces_one_rect_per_day():
     counts = {date(2024, 1, 1): 1, date(2024, 1, 3): 5}
-    svg = render_svg(counts, start=date(2024, 1, 1), end=date(2024, 1, 3))
+    svg = render_svg(counts, start=date(2024, 1, 1), end=date(2024, 1, 3), legend=False)
     assert svg.count("<rect") == 3  # Jan 1, 2, 3 — including the empty middle day
     assert svg.startswith("<svg")
 
 
 def test_render_svg_defaults_to_data_range():
     counts = {date(2024, 1, 1): 1, date(2024, 1, 10): 2}
-    svg = render_svg(counts)
+    svg = render_svg(counts, legend=False)
     assert svg.count("<rect") == 10
 
 
