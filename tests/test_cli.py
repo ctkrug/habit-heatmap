@@ -255,6 +255,18 @@ def test_cli_writes_png_file(tmp_path):
     assert output.read_bytes().startswith(b"\x89PNG\r\n\x1a\n")
 
 
+def test_cli_treats_png_suffix_case_insensitively(tmp_path):
+    pytest.importorskip("cairosvg")
+    output = tmp_path / "heatmap.PNG"
+    result = subprocess.run(
+        [sys.executable, "-m", "habit_heatmap", str(FIXTURE), "-o", str(output)],
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert output.read_bytes().startswith(b"\x89PNG\r\n\x1a\n")
+
+
 def test_cli_writes_svg_to_stdout_when_output_is_dash(tmp_path):
     result = subprocess.run(
         [sys.executable, "-m", "habit_heatmap", str(FIXTURE), "-o", "-"],
