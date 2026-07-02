@@ -47,5 +47,5 @@ Make it easy for someone to see themselves using this tool.
       same example dataset
 - [x] Add a second example dataset in a different domain (e.g. mood ratings
       1-5) to show the value-column path isn't just for workout minutes
-- [ ] Write a "cookbook" doc showing common recipes: git commit history,
+- [x] Write a "cookbook" doc showing common recipes: git commit history,
       a habit-tracking app's CSV export, a spreadsheet time log
