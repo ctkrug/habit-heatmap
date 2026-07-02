@@ -111,13 +111,15 @@ def render_svg(
         raise ValueError("counts is empty; pass explicit start and end dates")
     if week_start not in WEEK_START_WEEKDAYS:
         raise ValueError(f"week_start must be one of {sorted(WEEK_START_WEEKDAYS)}")
+    if theme not in THEMES:
+        raise ValueError(f"theme must be one of {sorted(THEMES)}")
 
     end = end or max(counts)
     start = start or min(counts)
     if start > end:
         raise ValueError("start date must be on or before end date")
 
-    palette = THEMES.get(theme, THEMES["github"])
+    palette = THEMES[theme]
     in_range_values = [value for day, value in counts.items() if start <= day <= end]
     max_value = max(in_range_values) if in_range_values else 0.0
     start_weekday = WEEK_START_WEEKDAYS[week_start]

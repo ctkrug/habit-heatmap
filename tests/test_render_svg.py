@@ -113,6 +113,11 @@ def test_render_svg_rejects_unknown_week_start():
         render_svg({date(2024, 1, 1): 1}, week_start="tuesday")
 
 
+def test_render_svg_rejects_unknown_theme():
+    with pytest.raises(ValueError):
+        render_svg({date(2024, 1, 1): 1}, theme="neon")
+
+
 def test_render_svg_color_scale_ignores_values_outside_the_range():
     # A huge value far outside an explicit render window shouldn't wash out
     # the scale for the day that's actually the busiest *within* the window.
