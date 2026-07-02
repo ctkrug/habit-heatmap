@@ -27,6 +27,13 @@ def test_load_events_rejects_missing_date_column():
         load_events(FIXTURE, date_col="not_a_column")
 
 
+def test_load_events_reports_a_readable_error_for_a_totally_empty_file(tmp_path):
+    empty_csv = tmp_path / "empty.csv"
+    empty_csv.write_text("")
+    with pytest.raises(ValueError, match=r"found \[\]"):
+        load_events(empty_csv)
+
+
 def test_load_events_rejects_unparseable_date(tmp_path):
     bad_csv = tmp_path / "bad.csv"
     bad_csv.write_text("date,value\nnot-a-date,1\n")

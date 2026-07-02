@@ -93,8 +93,9 @@ def load_events(
         source = open(csv_path, newline="", encoding="utf-8-sig")
     with source as fh:
         reader = csv.DictReader(fh)
-        if date_col not in (reader.fieldnames or []):
-            raise ValueError(f"CSV has no {date_col!r} column; found {reader.fieldnames}")
+        fieldnames = reader.fieldnames or []
+        if date_col not in fieldnames:
+            raise ValueError(f"CSV has no {date_col!r} column; found {fieldnames}")
         for row in reader:
             bucket = _row_bucket(row, date_col, value_col, date_format, target_zone)
             if bucket is None:
