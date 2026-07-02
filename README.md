@@ -22,8 +22,11 @@ date and (optionally) a value.
 
 ## Features
 
-- **Any CSV in.** Point it at a date column and (optionally) a numeric value column;
-  rows are aggregated per day automatically.
+- **Any CSV in — or any rows.** Point it at a date column and (optionally) a numeric
+  value column; rows are aggregated per day automatically. Reads from a file, from
+  stdin (`-`), or from an in-memory iterable of dicts via `load_events_from_rows`.
+- **Flexible dates.** Bare dates, ISO 8601 timestamps (`Z`/offset-aware or naive), and
+  a `--tz` option to normalize before bucketing into days.
 - **SVG by default, PNG on request.** SVG output is dependency-free; PNG rasterization
   is an opt-in extra.
 - **Themeable.** Ships with GitHub-green plus four alternate palettes (`blue`, `purple`,
@@ -63,6 +66,19 @@ from habit_heatmap import load_events, render_svg
 
 counts = load_events("events.csv", value_col="minutes")
 svg = render_svg(counts, theme="blue", label="Workouts")
+```
+
+Piping data in, or reading from something other than a CSV file:
+
+```
+cat workouts.csv | habit-heatmap - -o heatmap.svg
+```
+
+```python
+from habit_heatmap import load_events_from_rows
+
+# rows can come from anywhere — a DB cursor, an API response, etc.
+counts = load_events_from_rows(db.query("SELECT logged_at AS date, minutes FROM sets"))
 ```
 
 ### Themes
