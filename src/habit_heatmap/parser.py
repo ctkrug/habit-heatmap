@@ -60,6 +60,8 @@ def _row_bucket(
     amount = 1.0
     if value_col:
         raw_value = row.get(value_col)
+        if isinstance(raw_value, str):
+            raw_value = raw_value.strip()
         amount = float(raw_value) if raw_value else 0.0
     return moment.date(), amount
 

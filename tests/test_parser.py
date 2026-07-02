@@ -93,3 +93,9 @@ def test_load_events_from_rows_skips_rows_without_a_date():
     rows = [{"date": "2024-01-01"}, {"date": None}, {"date": ""}, {"date": "   "}]
     counts = load_events_from_rows(rows)
     assert counts == {date(2024, 1, 1): 1.0}
+
+
+def test_load_events_from_rows_treats_blank_value_cell_as_zero():
+    rows = [{"date": "2024-01-01", "value": "  "}, {"date": "2024-01-01", "value": "5"}]
+    counts = load_events_from_rows(rows, value_col="value")
+    assert counts == {date(2024, 1, 1): 5.0}
