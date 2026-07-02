@@ -1,5 +1,7 @@
 # Quilt
 
+**▶ Live demo — [apps.charliekrug.com/quilt](https://apps.charliekrug.com/quilt/)**
+
 [![CI](https://github.com/ctkrug/habit-heatmap/actions/workflows/ci.yml/badge.svg)](https://github.com/ctkrug/habit-heatmap/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
