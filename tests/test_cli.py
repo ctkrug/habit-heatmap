@@ -141,6 +141,30 @@ def test_cli_rejects_verbose_and_quiet_together(tmp_path):
     assert result.returncode != 0
 
 
+def test_cli_applies_date_format(tmp_path):
+    csv_path = tmp_path / "events.csv"
+    csv_path.write_text("logged_at,value\n01-Mar-2024,1\n")
+    output = tmp_path / "heatmap.svg"
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "habit_heatmap",
+            str(csv_path),
+            "-o",
+            str(output),
+            "--date-col",
+            "logged_at",
+            "--date-format",
+            "%d-%b-%Y",
+        ],
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert "2024-03-01" in output.read_text()
+
+
 def test_cli_reports_missing_column(tmp_path):
     output = tmp_path / "heatmap.svg"
     result = subprocess.run(
