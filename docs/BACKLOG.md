@@ -7,10 +7,10 @@ later build runs, not a detailed spec. Check off `[x]` as stories land.
 
 Make the heatmap itself look and read like the reference it's imitating.
 
-- [ ] Add month labels above the grid and weekday labels (Mon/Wed/Fri) beside it
-- [ ] Add a color legend ("Less ... More") below the grid
-- [ ] Support a `--label` / title option rendered above the chart
-- [ ] Add at least two more themes (e.g. a monochrome/grayscale and a
+- [x] Add month labels above the grid and weekday labels (Mon/Wed/Fri) beside it
+- [x] Add a color legend ("Less ... More") below the grid
+- [x] Support a `--label` / title option rendered above the chart
+- [x] Add at least two more themes (e.g. a monochrome/grayscale and a
       dark-background variant) and document how to add a custom one
 
 ## Epic 2: Parser flexibility
